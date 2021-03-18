@@ -1,0 +1,13 @@
+University,Gender,Class,Major,Live on campus,Live alone,How much spend on groceries per week (in dollars),How much spend on takeout per week (in dollars),Number of grocery stores using,Spent on Groceries Range,Takeout Range
+Carnegie Mellon University,Male,Junior,Biological Science,No,No,100,25,2,100-150,25-50
+University of Cincinnati,Female,Junior,Vocal Performance & Neuroscience,No,No,150,10,3,100-150,0-25
+University of Maryland,Male,Senior,Food Science,No,No,80,10,2,50-100,0-25
+University of Maryland,Female,Junior,Business Administration,No,No,240,40,3,>150,25-50
+Carnegie Mellon University,Female,Junior,Computer Science and Robotics,No,No,60,20,5,50-100,0-25
+Carnegie Mellon University,Female,Junior,Biology,No,Yes,60,20,3,50-100,0-25
+University of Maryland,Male,Senior,Biology,No,No,40,35,1,0-50,25-50
+Carnegie Mellon University,Male,Senior,Engineering,No,Yes,25,20,2,0-50,0-25
+Carnegie Mellon University,Male,Senior,Statistics,Yes,Yes,60,10,1,50-100,0-25
+University of Maryland,Female,Junior,Psychology,No,No,"N/A (Live with her family, so she couldn't remember)",15,2,0-50,0-25
+University of Washington,Female,Freshman,Political Science,Yes,No,15,10,2,0-50,0-25
+University of Pittsburgh,Female,Junior,Biological Science,No,No,60,10,1,50-100,0-25
