@@ -218,7 +218,7 @@ if option=='Survey Analysis':
 
 	expander_8 = st.beta_expander("Ideas you would like the grocery stores to implement?")
 	with expander_8:
-		st.title('Grocery Store Preferences')
+		st.title('Suggested Ideas')
 		# This dataframe has 244 lines, but 4 distinct values for `day` 
 		preference_list = df['Is there any service from the following list you would like your grocery shop to implement? (check all that apply)'].tolist()
 		counts = {}
