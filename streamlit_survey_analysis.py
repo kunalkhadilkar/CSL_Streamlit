@@ -7,7 +7,6 @@ import altair as alt
 import plotly.express as px
 import plotly.graph_objects as go
 st.image('CSL Logo.png',width=500)
-st.title('Giant Eagle Survey Analysis')
 dataset = pd.read_csv('survey_data.csv')
 
 df = dataset
@@ -21,11 +20,14 @@ value_counts_series = df['Which university do you belong to?'].value_counts()
 uni_counts = value_counts_series.tolist()
 uni_names = value_counts_series.index.tolist()
 
+st.title("Corporate Startup Lab x Giant Eagle Customer Dashboard :office:")
+
 st.sidebar.title("Select Analysis")
 st.sidebar.markdown("Choose between survey or interview analysis:")
-option = st.sidebar.radio("Choose:",   ('Survey Analysis', 'Interview Analysis'))
+option = st.sidebar.selectbox("Choose:",   ('','Survey Analysis', 'Interview Analysis'),format_func=lambda x: 'Select an option' if x == '' else x)
 
 if option=='Survey Analysis':
+	st.title('Giant Eagle Survey Analysis')
 	if st.checkbox('Raw Data'):
 		st.write(df[0:5])
 
@@ -109,15 +111,19 @@ if option=='Survey Analysis':
 
 	expander_6 = st.beta_expander("How much do you spend on an average per month for grocery shopping?")
 	with expander_6:
-		st.title('How much do you spend on an average per month for grocery shopping?')
+		st.title('How much do you spend on an average per month for grocery shopping? :dollar:')
 		# This dataframe has 244 lines, but 4 distinct values for `day` 
 		money_series = df['How much do you spend on an average per month for grocery shopping?'].value_counts()
 		money_values = money_series.tolist()
 		money_names = money_series.index.tolist()
+		money_names = sorted(money_names)
+		money_names = ['< $99','$100 - $149', '$150 -  $199', '$200 - $249', '$250 - $300', '$300+']
+		money_values = [2,14,13,11,6,6]
 		money_df = pd.DataFrame({
 			'Amount Spent per month on groceries': money_names,
 			'Number of Respondents': money_values
 		})
+		print(money_df)
 		fig = px.bar(money_df,y='Number of Respondents', x='Amount Spent per month on groceries',height=500)
 
 		fig.update_yaxes(automargin=True)
@@ -210,8 +216,35 @@ if option=='Survey Analysis':
 		fig.update_yaxes(automargin=True)
 		st.plotly_chart(fig)
 
+	expander_8 = st.beta_expander("Ideas you would like the grocery stores to implement?")
+	with expander_8:
+		st.title('Grocery Store Preferences')
+		# This dataframe has 244 lines, but 4 distinct values for `day` 
+		preference_list = df['Is there any service from the following list you would like your grocery shop to implement? (check all that apply)'].tolist()
+		counts = {}
+		preference_list_splitted = []
+		for i in preference_list:
+			individual = i.split(",")
+			for k in individual:
+				preference_list_splitted.append(k.strip())
+		for i in preference_list_splitted:
+			counts[i] = counts.get(i, 0) + 1
+		#print(counts)
+		preference_names = ['Student Membership / Discounts','Curbside Delivery','Grocery delivered to your Campus via On-Campus Locker system','Meals on Wheels','A parking lot instead of on-street parking']
+		preference_values = [47,14,7,5,1]
+		store_values = store_series.tolist()
+		store_names = store_series.index.tolist()
+		store_df = pd.DataFrame({
+			'Ideas to Implement': preference_names,
+			'Number of Respondents': preference_values
+		})
+		fig = px.bar(store_df,y='Number of Respondents', x='Ideas to Implement',height=500)	
+		fig.update_yaxes(automargin=True)
+		st.plotly_chart(fig)
+
 
 if option=='Interview Analysis':
+	st.title('Giant Eagle Interview Analysis')
 	interview_dataset = pd.read_csv('interview_data.csv')
 	print(interview_dataset.head())
 	int_df = interview_dataset
@@ -221,7 +254,7 @@ if option=='Interview Analysis':
 
 	expander = st.beta_expander("Basic Demographics")
 	with expander:
-		st.title('Gender')
+		st.title('Gender :boy: :girl:')
 			# This dataframe has 244 lines, but 4 distinct values for `day` 
 		demographic_series = int_df['Gender'].value_counts()
 		demographic_values = demographic_series.tolist()
@@ -235,7 +268,7 @@ if option=='Interview Analysis':
 		fig.update_yaxes(automargin=True)
 		st.plotly_chart(fig)
 
-		st.title('University Year')
+		st.title('University Year :school_satchel:')
 			# This dataframe has 244 lines, but 4 distinct values for `day` 
 		demographic_series = int_df['Class'].value_counts()
 		demographic_values = demographic_series.tolist()
@@ -251,7 +284,7 @@ if option=='Interview Analysis':
 
 	expander = st.beta_expander("Housing Details")
 	with expander:
-		st.title('Do the students live on campus?')
+		st.title('Do the students live on campus? :house_with_garden:')
 			# This dataframe has 244 lines, but 4 distinct values for `day` 
 		demographic_series = int_df['Live on campus'].value_counts()
 		demographic_values = demographic_series.tolist()
@@ -281,11 +314,13 @@ if option=='Interview Analysis':
 
 	expander = st.beta_expander("Money Spent on Groceries and Takeouts")
 	with expander:
-		st.title('How much do students spend on groceries each week?')
+		st.title('How much do students spend on groceries each week? :dollar:')
 			# This dataframe has 244 lines, but 4 distinct values for `day` 
 		demographic_series = int_df['Spent on Groceries Range'].value_counts()
 		demographic_values = demographic_series.tolist()
 		demographic_names = demographic_series.index.tolist()
+		demographic_names = ['0-50','50-100','100-150','>150']
+		demographic_values = [4,7,2,1]
 		demographic_df = pd.DataFrame({
 				'Money Spent on Groceries': demographic_names,
 				'Number of Respondents': demographic_values
@@ -295,7 +330,7 @@ if option=='Interview Analysis':
 		fig.update_yaxes(automargin=True)
 		st.plotly_chart(fig)
 
-		st.title('How much do students spend on takeouts each week?')
+		st.title('How much do students spend on takeouts each week? :dollar:')
 			# This dataframe has 244 lines, but 4 distinct values for `day` 
 		demographic_series = int_df['Takeout Range'].value_counts()
 		demographic_values = demographic_series.tolist()
@@ -305,6 +340,22 @@ if option=='Interview Analysis':
 				'Number of Respondents': demographic_values
 		})
 		fig = px.bar(demographic_df,y='Number of Respondents', x='Money Spent on Takeouts',height=500)
+
+		fig.update_yaxes(automargin=True)
+		st.plotly_chart(fig)
+
+	expander = st.beta_expander("Personas Distribution")
+	with expander:
+		st.title('Personas Distribution')
+			# This dataframe has 244 lines, but 4 distinct values for `day` 
+		demographic_series = int_df['Personas'].value_counts()
+		demographic_values = demographic_series.tolist()
+		demographic_names = demographic_series.index.tolist()
+		demographic_df = pd.DataFrame({
+				'Personas': demographic_names,
+				'Number of Respondents': demographic_values
+		})
+		fig = px.bar(demographic_df,y='Number of Respondents', x='Personas',height=500)
 
 		fig.update_yaxes(automargin=True)
 		st.plotly_chart(fig)
